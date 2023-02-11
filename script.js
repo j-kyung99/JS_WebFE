@@ -45,17 +45,26 @@ function selectAll(btn) {
   }
 }
 
-function slideShow() {
+function slideShow(btn) {
   var images = document.getElementsByClassName("image");
   var index = 0;
   images[index].classList.add("image-magnified");
   var intervalId = setInterval(function () {
     images[index].classList.remove("image-magnified");
     index++;
-    if (index < images.length) {
-      images[index].classList.add("image-magnified");
-    } else {
+    if (btn.value == "Play Slideshow") {
       clearInterval(intervalId);
+    } else {
+      if (index < images.length) {
+        images[index].classList.add("image-magnified");
+      } else {
+        clearInterval(intervalId);
+      }
     }
   }, 1000);
+  if (btn.value == "Play Slideshow") {
+    btn.value = "Stop Slideshow";
+  } else {
+    btn.value = "Play Slideshow";
+  }
 }
