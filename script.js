@@ -1,4 +1,5 @@
 var req = new XMLHttpRequest();
+let onSlide = false;
 req.open("GET", "./json/image_list.json");
 req.onreadystatechange = function () {
   if (this.readyState == 4) {
@@ -12,9 +13,11 @@ req.onreadystatechange = function () {
       };
       div.onmouseover = function () {
         var element = this;
-        this.timerId = setTimeout(function () {
-          element.classList.add("image-magnified");
-        }, 1000);
+        if (!onSlide) {
+          this.timerId = setTimeout(function () {
+            element.classList.add("image-magnified");
+          }, 1000);
+        }
       };
       div.onmouseout = function () {
         clearTimeout(this.timerId);
@@ -59,12 +62,16 @@ function slideShow(btn) {
         images[index].classList.add("image-magnified");
       } else {
         clearInterval(intervalId);
+        btn.value = "Play Slideshow";
+        onSlide = false;
       }
     }
   }, 1000);
   if (btn.value == "Play Slideshow") {
     btn.value = "Stop Slideshow";
+    onSlide = true;
   } else {
     btn.value = "Play Slideshow";
+    onSlide = false;
   }
 }
